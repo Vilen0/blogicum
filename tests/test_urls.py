@@ -35,7 +35,7 @@ def test_pages_urls():
 
 def test_blogicum_urls():
     try:
-        from blogicum.urls import urlpatterns as solution_urlpatterns
+        from Blogicum.urls import urlpatterns as solution_urlpatterns
     except Exception as e:
         raise AssertionError(
             'При импорте списка маршрутов `urlpatterns` из файла '

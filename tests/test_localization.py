@@ -1,9 +1,10 @@
 import importlib
-
+import os
 import pytest
 from django.apps import apps
 from django.conf import settings
 
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Blogicum.settings')
 
 def test_rus_localization():
     assert hasattr(settings, 'LANGUAGE_CODE'), (
