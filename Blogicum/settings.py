@@ -13,7 +13,10 @@ SECRET_KEY = 'django-insecure-towmz)2=!8fc=7is8b2&-o0mecab!+dkqbd53^t#)%_rjzybxq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -42,11 +45,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-'''
+
 INTERNAL_IPS = [
     '127.0.0.1',
 ] 
-'''
+
 
 POSTS_PER_PAGE = 5 #количество постов на главной странице
 
@@ -133,7 +136,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CSRF_FAILURE_VIEW = 'pages.views.csrf_failure'
 
 AUTH_USER_MODEL = 'users.MyUser'
-
 
 LOGIN_REDIRECT_URL = 'blog:index'
 

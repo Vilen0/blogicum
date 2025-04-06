@@ -10,7 +10,7 @@ User = get_user_model()
 class Category(PublishedModel):
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
-    image = models.ImageField('Фото', upload_to='post_images', blank=True)
+    image = models.ImageField('Фото', upload_to='post_images', null=True, blank=True)
     slug = models.SlugField(
         unique=True,
         verbose_name='Идентификатор',

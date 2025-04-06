@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404, render, redirect
 from django.utils import timezone
 from django.views.generic import (
     CreateView,
@@ -18,12 +17,6 @@ from django.http import HttpResponseForbidden
 from blog.forms import PostForm, CommentForm, ProfileForm, PasswordChangeForm
 from blog.models import Post, Category, Comment
 from Blogicum.settings import LIMIT_POSTS
-
-from blog.models import Post, Category
-from django.conf import settings
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from .forms import PostForm
 
 User = get_user_model()
 
