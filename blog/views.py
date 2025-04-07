@@ -16,7 +16,7 @@ from django.http import HttpResponseForbidden
 
 from blog.forms import PostForm, CommentForm, ProfileForm, PasswordChangeForm
 from blog.models import Post, Category, Comment
-from Blogicum.settings import LIMIT_POSTS
+from Blogicum.settings import LIMIT_POSTS, LIMIT_CATEGORY_POSTS
 
 User = get_user_model()
 
@@ -122,18 +122,38 @@ class PostDetailView(DetailView):
     pk_url_kwarg = 'post_id'
 
     def get_object(self):
-        object = super(PostDetailView, self).get_object()
-        if self.request.user != object.author and (
-            not object.is_published or not object.category.is_published
+        obj = super().get_object()
+
+        # Добавляем проверку на дату публикации
+        if obj.pub_date > timezone.now():
+            raise Http404('Post not found')  # Если дата публикации в будущем, выбрасываем 404
+
+        # Проверка прав доступа
+        if self.request.user != obj.author and (
+                not obj.is_published or not obj.category.is_published
         ):
             raise Http404()
-        return object
+
+        return obj
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
         context['comments'] = self.object.comments.select_related('author')
         return context
+
+'''
+    def get_object(self):
+        object = super(PostDetailView, self).get_object()
+
+
+        if self.request.user != object.author and (
+            not object.is_published or not object.category.is_published
+        ):
+            raise Http404()
+        return object
+'''
+
 
 
 
@@ -164,7 +184,7 @@ def category_posts(request, category_slug):
         is_published=True,
         pub_date__lte=current_time,
     )
-    paginator = Paginator(post_list, LIMIT_POSTS)
+    paginator = Paginator(post_list, LIMIT_CATEGORY_POSTS)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {'category': category, 'page_obj': page_obj}
