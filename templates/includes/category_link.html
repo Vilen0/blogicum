@@ -1,4 +1,3 @@
-<!-- category_link.html -->
 <a class="text-muted" href="{% url 'blog:category_posts' post.category.slug %}">
-  «{{ post.category.title }}»
+  {{ post.category.title }}
 </a>
